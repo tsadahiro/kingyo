@@ -4,6 +4,8 @@ import Svg exposing(..)
 import Svg.Events exposing(..)
 import Svg.Attributes exposing (..)
 import Types exposing (..)
+import Html.Events.Extra.Touch as Touch
+import Html.Events.Extra.Pointer as Pointer
 
 kingyoView: Kingyo -> Svg Msg
 kingyoView kingyo =
@@ -70,3 +72,28 @@ kingyoView kingyo =
             , fill "red"
             ][]
         ]
+
+amiView :  Ami -> Svg Msg
+amiView ami =
+    let
+        xstr = (String.fromInt ami.pos.x)
+        ystr = (String.fromInt ami.pos.y)
+    in
+    g [transform ("translate("++xstr++","++ystr++")")
+        , Touch.onStart (StartAt << touchCoordinates)
+        , Touch.onMove (MoveAt << touchCoordinates)
+        , Touch.onEnd (EndAt << touchCoordinates)
+        ]
+    [circle [cx "0"
+            ,cy "0"
+            ,r "50"
+            ,fill "#afa"
+            ][]
+    ]
+    
+
+touchCoordinates : Touch.Event -> ( Float, Float )
+touchCoordinates touchEvent =
+    List.head touchEvent.changedTouches
+        |> Maybe.map .clientPos
+        |> Maybe.withDefault ( 0, 0 )

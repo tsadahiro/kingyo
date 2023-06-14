@@ -21,20 +21,19 @@ pondHeight = 800
 
 init: () -> (Model, Cmd Msg)
 init _ =
-    (Model [Kingyo (Vec2D 200 100) (Vec2D 10 11)
-            ,Kingyo (Vec2D 250 150) (Vec2D 11 9)
-            ,Kingyo (Vec2D 400 150) (Vec2D -11 5)
-            ], Random.generate KingyoGenerated (Random.list 20 randomKingyo) )
+    (Model [] 0 (Ami (Vec2D 500 500))
+    , Random.generate KingyoGenerated (Random.list 2 randomKingyo) )
 
 
 randomKingyo: Random.Generator Kingyo
 randomKingyo =
-    Random.map4 
-        (\x y vx vy -> Kingyo (Vec2D x y) (Vec2D vx vy))
+    Random.map5 
+        (\x y vx vy level -> Kingyo (Vec2D x y) (Vec2D vx vy) level)
         (Random.int 0 799)
         (Random.int 0 799)
         (Random.int 6 15)
         (Random.int 6 15)
+        (Random.int 1 5)
 
 kingyoStep : Kingyo -> Kingyo
 kingyoStep kingyo =
@@ -65,7 +64,25 @@ update msg model =
         KingyoGenerated newKingyos -> 
             ({model| kingyos = newKingyos++model.kingyos}
             , Cmd.none)
-
+        StartAt (x,y) ->
+            let
+                ami = Debug.log "" <|   Ami (Vec2D (round x) (round y))
+            in
+            ({model | ami=ami}
+            ,Cmd.none)
+        MoveAt (x,y) ->
+            let
+                ami = Debug.log "" <|   Ami (Vec2D (round x) (round y))
+            in
+            ({model | ami=ami}
+            ,Cmd.none)
+        EndAt (x,y) ->
+            let
+                ami = Debug.log "" <|   Ami (Vec2D (round x) (round y))
+            in
+            ({model | ami=ami}
+            ,Cmd.none)
+ 
 view: Model -> Svg Msg
 view model =
     svg [width "800"
@@ -76,6 +93,7 @@ view model =
                 ,stroke "black"
                 ,fillOpacity "0.5"]
                 []
+        ,amiView model.ami
          ]++ (List.map kingyoView model.kingyos)
         )
 
