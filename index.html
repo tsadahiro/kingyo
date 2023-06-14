@@ -5256,16 +5256,16 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Types$Kingyo = F2(
-	function (pos, v) {
-		return {pos: pos, v: v};
-	});
+var $author$project$Types$Ami = function (pos) {
+	return {pos: pos};
+};
 var $author$project$Types$KingyoGenerated = function (a) {
 	return {$: 'KingyoGenerated', a: a};
 };
-var $author$project$Types$Model = function (kingyos) {
-	return {kingyos: kingyos};
-};
+var $author$project$Types$Model = F3(
+	function (kingyos, coins, ami) {
+		return {ami: ami, coins: coins, kingyos: kingyos};
+	});
 var $author$project$Types$Vec2D = F2(
 	function (x, y) {
 		return {x: x, y: y};
@@ -5407,10 +5407,14 @@ var $elm$random$Random$list = F2(
 				return A4($elm$random$Random$listHelp, _List_Nil, n, gen, seed);
 			});
 	});
+var $author$project$Types$Kingyo = F3(
+	function (pos, v, level) {
+		return {level: level, pos: pos, v: v};
+	});
+var $elm$core$Bitwise$and = _Bitwise_and;
 var $elm$core$Basics$negate = function (n) {
 	return -n;
 };
-var $elm$core$Bitwise$and = _Bitwise_and;
 var $elm$core$Bitwise$xor = _Bitwise_xor;
 var $elm$random$Random$peel = function (_v0) {
 	var state = _v0.a;
@@ -5449,66 +5453,62 @@ var $elm$random$Random$int = F2(
 				}
 			});
 	});
-var $elm$random$Random$map4 = F5(
-	function (func, _v0, _v1, _v2, _v3) {
+var $elm$random$Random$map5 = F6(
+	function (func, _v0, _v1, _v2, _v3, _v4) {
 		var genA = _v0.a;
 		var genB = _v1.a;
 		var genC = _v2.a;
 		var genD = _v3.a;
+		var genE = _v4.a;
 		return $elm$random$Random$Generator(
 			function (seed0) {
-				var _v4 = genA(seed0);
-				var a = _v4.a;
-				var seed1 = _v4.b;
-				var _v5 = genB(seed1);
-				var b = _v5.a;
-				var seed2 = _v5.b;
-				var _v6 = genC(seed2);
-				var c = _v6.a;
-				var seed3 = _v6.b;
-				var _v7 = genD(seed3);
-				var d = _v7.a;
-				var seed4 = _v7.b;
+				var _v5 = genA(seed0);
+				var a = _v5.a;
+				var seed1 = _v5.b;
+				var _v6 = genB(seed1);
+				var b = _v6.a;
+				var seed2 = _v6.b;
+				var _v7 = genC(seed2);
+				var c = _v7.a;
+				var seed3 = _v7.b;
+				var _v8 = genD(seed3);
+				var d = _v8.a;
+				var seed4 = _v8.b;
+				var _v9 = genE(seed4);
+				var e = _v9.a;
+				var seed5 = _v9.b;
 				return _Utils_Tuple2(
-					A4(func, a, b, c, d),
-					seed4);
+					A5(func, a, b, c, d, e),
+					seed5);
 			});
 	});
-var $author$project$Kingyo$randomKingyo = A5(
-	$elm$random$Random$map4,
-	F4(
-		function (x, y, vx, vy) {
-			return A2(
+var $author$project$Kingyo$randomKingyo = A6(
+	$elm$random$Random$map5,
+	F5(
+		function (x, y, vx, vy, level) {
+			return A3(
 				$author$project$Types$Kingyo,
 				A2($author$project$Types$Vec2D, x, y),
-				A2($author$project$Types$Vec2D, vx, vy));
+				A2($author$project$Types$Vec2D, vx, vy),
+				level);
 		}),
 	A2($elm$random$Random$int, 0, 799),
 	A2($elm$random$Random$int, 0, 799),
 	A2($elm$random$Random$int, 6, 15),
-	A2($elm$random$Random$int, 6, 15));
+	A2($elm$random$Random$int, 6, 15),
+	A2($elm$random$Random$int, 1, 5));
 var $author$project$Kingyo$init = function (_v0) {
 	return _Utils_Tuple2(
-		$author$project$Types$Model(
-			_List_fromArray(
-				[
-					A2(
-					$author$project$Types$Kingyo,
-					A2($author$project$Types$Vec2D, 200, 100),
-					A2($author$project$Types$Vec2D, 10, 11)),
-					A2(
-					$author$project$Types$Kingyo,
-					A2($author$project$Types$Vec2D, 250, 150),
-					A2($author$project$Types$Vec2D, 11, 9)),
-					A2(
-					$author$project$Types$Kingyo,
-					A2($author$project$Types$Vec2D, 400, 150),
-					A2($author$project$Types$Vec2D, -11, 5))
-				])),
+		A3(
+			$author$project$Types$Model,
+			_List_Nil,
+			0,
+			$author$project$Types$Ami(
+				A2($author$project$Types$Vec2D, 500, 500))),
 		A2(
 			$elm$random$Random$generate,
 			$author$project$Types$KingyoGenerated,
-			A2($elm$random$Random$list, 20, $author$project$Kingyo$randomKingyo)));
+			A2($elm$random$Random$list, 2, $author$project$Kingyo$randomKingyo)));
 };
 var $author$project$Types$Tick = function (a) {
 	return {$: 'Tick', a: a};
@@ -5933,46 +5933,304 @@ var $author$project$Kingyo$kingyoStep = function (kingyo) {
 			v: A2($author$project$Types$Vec2D, newVx, newVy)
 		});
 };
+var $elm$core$Debug$log = _Debug_log;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$core$Basics$round = _Basics_round;
 var $author$project$Kingyo$update = F2(
 	function (msg, model) {
-		if (msg.$ === 'Tick') {
-			var t = msg.a;
-			return _Utils_Tuple2(
-				_Utils_update(
-					model,
-					{
-						kingyos: A2($elm$core$List$map, $author$project$Kingyo$kingyoStep, model.kingyos)
-					}),
-				$elm$core$Platform$Cmd$none);
-		} else {
-			var newKingyos = msg.a;
-			return _Utils_Tuple2(
-				_Utils_update(
-					model,
-					{
-						kingyos: _Utils_ap(newKingyos, model.kingyos)
-					}),
-				$elm$core$Platform$Cmd$none);
+		switch (msg.$) {
+			case 'Tick':
+				var t = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							kingyos: A2($elm$core$List$map, $author$project$Kingyo$kingyoStep, model.kingyos)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'KingyoGenerated':
+				var newKingyos = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							kingyos: _Utils_ap(newKingyos, model.kingyos)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'StartAt':
+				var _v1 = msg.a;
+				var x = _v1.a;
+				var y = _v1.b;
+				var ami = A2(
+					$elm$core$Debug$log,
+					'',
+					$author$project$Types$Ami(
+						A2(
+							$author$project$Types$Vec2D,
+							$elm$core$Basics$round(x),
+							$elm$core$Basics$round(y))));
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{ami: ami}),
+					$elm$core$Platform$Cmd$none);
+			case 'MoveAt':
+				var _v2 = msg.a;
+				var x = _v2.a;
+				var y = _v2.b;
+				var ami = A2(
+					$elm$core$Debug$log,
+					'',
+					$author$project$Types$Ami(
+						A2(
+							$author$project$Types$Vec2D,
+							$elm$core$Basics$round(x),
+							$elm$core$Basics$round(y))));
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{ami: ami}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				var _v3 = msg.a;
+				var x = _v3.a;
+				var y = _v3.b;
+				var ami = A2(
+					$elm$core$Debug$log,
+					'',
+					$author$project$Types$Ami(
+						A2(
+							$author$project$Types$Vec2D,
+							$elm$core$Basics$round(x),
+							$elm$core$Basics$round(y))));
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{ami: ami}),
+					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
-var $elm$svg$Svg$Attributes$fillOpacity = _VirtualDom_attribute('fill-opacity');
-var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
-var $elm$core$Basics$atan = _Basics_atan;
+var $author$project$Types$EndAt = function (a) {
+	return {$: 'EndAt', a: a};
+};
+var $author$project$Types$MoveAt = function (a) {
+	return {$: 'MoveAt', a: a};
+};
+var $author$project$Types$StartAt = function (a) {
+	return {$: 'StartAt', a: a};
+};
 var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
 var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
 var $elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');
+var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
+var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$defaultOptions = {preventDefault: true, stopPropagation: false};
+var $elm$virtual_dom$VirtualDom$Custom = function (a) {
+	return {$: 'Custom', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$custom = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Custom(decoder));
+	});
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$Event = F4(
+	function (keys, changedTouches, targetTouches, touches) {
+		return {changedTouches: changedTouches, keys: keys, targetTouches: targetTouches, touches: touches};
+	});
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $mpizenberg$elm_pointer_events$Internal$Decode$Keys = F4(
+	function (alt, ctrl, meta, shift) {
+		return {alt: alt, ctrl: ctrl, meta: meta, shift: shift};
+	});
+var $elm$json$Json$Decode$bool = _Json_decodeBool;
+var $elm$json$Json$Decode$map4 = _Json_map4;
+var $mpizenberg$elm_pointer_events$Internal$Decode$keys = A5(
+	$elm$json$Json$Decode$map4,
+	$mpizenberg$elm_pointer_events$Internal$Decode$Keys,
+	A2($elm$json$Json$Decode$field, 'altKey', $elm$json$Json$Decode$bool),
+	A2($elm$json$Json$Decode$field, 'ctrlKey', $elm$json$Json$Decode$bool),
+	A2($elm$json$Json$Decode$field, 'metaKey', $elm$json$Json$Decode$bool),
+	A2($elm$json$Json$Decode$field, 'shiftKey', $elm$json$Json$Decode$bool));
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$Touch = F4(
+	function (identifier, clientPos, pagePos, screenPos) {
+		return {clientPos: clientPos, identifier: identifier, pagePos: pagePos, screenPos: screenPos};
+	});
+var $elm$json$Json$Decode$float = _Json_decodeFloat;
+var $mpizenberg$elm_pointer_events$Internal$Decode$clientPos = A3(
+	$elm$json$Json$Decode$map2,
+	F2(
+		function (a, b) {
+			return _Utils_Tuple2(a, b);
+		}),
+	A2($elm$json$Json$Decode$field, 'clientX', $elm$json$Json$Decode$float),
+	A2($elm$json$Json$Decode$field, 'clientY', $elm$json$Json$Decode$float));
+var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $mpizenberg$elm_pointer_events$Internal$Decode$pagePos = A3(
+	$elm$json$Json$Decode$map2,
+	F2(
+		function (a, b) {
+			return _Utils_Tuple2(a, b);
+		}),
+	A2($elm$json$Json$Decode$field, 'pageX', $elm$json$Json$Decode$float),
+	A2($elm$json$Json$Decode$field, 'pageY', $elm$json$Json$Decode$float));
+var $mpizenberg$elm_pointer_events$Internal$Decode$screenPos = A3(
+	$elm$json$Json$Decode$map2,
+	F2(
+		function (a, b) {
+			return _Utils_Tuple2(a, b);
+		}),
+	A2($elm$json$Json$Decode$field, 'screenX', $elm$json$Json$Decode$float),
+	A2($elm$json$Json$Decode$field, 'screenY', $elm$json$Json$Decode$float));
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchDecoder = A5(
+	$elm$json$Json$Decode$map4,
+	$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$Touch,
+	A2($elm$json$Json$Decode$field, 'identifier', $elm$json$Json$Decode$int),
+	$mpizenberg$elm_pointer_events$Internal$Decode$clientPos,
+	$mpizenberg$elm_pointer_events$Internal$Decode$pagePos,
+	$mpizenberg$elm_pointer_events$Internal$Decode$screenPos);
+var $mpizenberg$elm_pointer_events$Internal$Decode$all = A2(
+	$elm$core$List$foldr,
+	$elm$json$Json$Decode$map2($elm$core$List$cons),
+	$elm$json$Json$Decode$succeed(_List_Nil));
+var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $mpizenberg$elm_pointer_events$Internal$Decode$dynamicListOf = function (itemDecoder) {
+	var decodeOne = function (n) {
+		return A2(
+			$elm$json$Json$Decode$field,
+			$elm$core$String$fromInt(n),
+			itemDecoder);
+	};
+	var decodeN = function (n) {
+		return $mpizenberg$elm_pointer_events$Internal$Decode$all(
+			A2(
+				$elm$core$List$map,
+				decodeOne,
+				A2($elm$core$List$range, 0, n - 1)));
+	};
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		decodeN,
+		A2($elm$json$Json$Decode$field, 'length', $elm$json$Json$Decode$int));
+};
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchListDecoder = $mpizenberg$elm_pointer_events$Internal$Decode$dynamicListOf;
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$eventDecoder = A5(
+	$elm$json$Json$Decode$map4,
+	$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$Event,
+	$mpizenberg$elm_pointer_events$Internal$Decode$keys,
+	A2(
+		$elm$json$Json$Decode$field,
+		'changedTouches',
+		$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchListDecoder($mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchDecoder)),
+	A2(
+		$elm$json$Json$Decode$field,
+		'targetTouches',
+		$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchListDecoder($mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchDecoder)),
+	A2(
+		$elm$json$Json$Decode$field,
+		'touches',
+		$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchListDecoder($mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$touchDecoder)));
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onWithOptions = F3(
+	function (event, options, tag) {
+		return A2(
+			$elm$html$Html$Events$custom,
+			event,
+			A2(
+				$elm$json$Json$Decode$map,
+				function (ev) {
+					return {
+						message: tag(ev),
+						preventDefault: options.preventDefault,
+						stopPropagation: options.stopPropagation
+					};
+				},
+				$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$eventDecoder));
+	});
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onEnd = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onWithOptions, 'touchend', $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$defaultOptions);
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onMove = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onWithOptions, 'touchmove', $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$defaultOptions);
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onStart = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onWithOptions, 'touchstart', $mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$defaultOptions);
+var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $author$project$KingyoView$touchCoordinates = function (touchEvent) {
+	return A2(
+		$elm$core$Maybe$withDefault,
+		_Utils_Tuple2(0, 0),
+		A2(
+			$elm$core$Maybe$map,
+			function ($) {
+				return $.clientPos;
+			},
+			$elm$core$List$head(touchEvent.changedTouches)));
+};
+var $elm$svg$Svg$Attributes$transform = _VirtualDom_attribute('transform');
+var $author$project$KingyoView$amiView = function (ami) {
+	var ystr = $elm$core$String$fromInt(ami.pos.y);
+	var xstr = $elm$core$String$fromInt(ami.pos.x);
+	return A2(
+		$elm$svg$Svg$g,
+		_List_fromArray(
+			[
+				$elm$svg$Svg$Attributes$transform('translate(' + (xstr + (',' + (ystr + ')')))),
+				$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onStart(
+				A2($elm$core$Basics$composeL, $author$project$Types$StartAt, $author$project$KingyoView$touchCoordinates)),
+				$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onMove(
+				A2($elm$core$Basics$composeL, $author$project$Types$MoveAt, $author$project$KingyoView$touchCoordinates)),
+				$mpizenberg$elm_pointer_events$Html$Events$Extra$Touch$onEnd(
+				A2($elm$core$Basics$composeL, $author$project$Types$EndAt, $author$project$KingyoView$touchCoordinates))
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$svg$Svg$circle,
+				_List_fromArray(
+					[
+						$elm$svg$Svg$Attributes$cx('0'),
+						$elm$svg$Svg$Attributes$cy('0'),
+						$elm$svg$Svg$Attributes$r('50'),
+						$elm$svg$Svg$Attributes$fill('#afa')
+					]),
+				_List_Nil)
+			]));
+};
+var $elm$svg$Svg$Attributes$fillOpacity = _VirtualDom_attribute('fill-opacity');
+var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
+var $elm$core$Basics$atan = _Basics_atan;
 var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
 var $elm$core$String$fromFloat = _String_fromNumber;
-var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
 var $elm$svg$Svg$path = $elm$svg$Svg$trustedNode('path');
 var $elm$core$Basics$pi = _Basics_pi;
-var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
 var $elm$svg$Svg$Attributes$stroke = _VirtualDom_attribute('stroke');
-var $elm$svg$Svg$Attributes$transform = _VirtualDom_attribute('transform');
 var $author$project$KingyoView$kingyoView = function (kingyo) {
 	var vy = kingyo.v.y;
 	var vx = kingyo.v.x;
@@ -6101,7 +6359,8 @@ var $author$project$Kingyo$view = function (model) {
 							$elm$svg$Svg$Attributes$stroke('black'),
 							$elm$svg$Svg$Attributes$fillOpacity('0.5')
 						]),
-					_List_Nil)
+					_List_Nil),
+					$author$project$KingyoView$amiView(model.ami)
 				]),
 			A2($elm$core$List$map, $author$project$KingyoView$kingyoView, model.kingyos)));
 };
